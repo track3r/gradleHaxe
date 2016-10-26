@@ -1,0 +1,101 @@
+buildscript {
+    repositories {
+        jcenter()
+        ivy {
+                // change to point to your repo, e.g. http://my.org/repo
+                url "${rootProject.buildDir}/repo"
+            }
+    }
+    dependencies {
+        classpath group: 'com.prezi.haxe', name: 'gradle-haxe-plugin', version: '5.1'
+    }
+}
+
+apply plugin: com.prezi.haxe.gradle.HaxePlugin
+apply plugin: "ivy-publish"
+
+version = '3.9.2'
+group = 'de.gameduell.types'
+
+// model {
+//     tasks.generateDescriptorFileForIvyCustomPublication {
+//         destination = file("$buildDir/haxe-source/cpp/generated-ivy.xml")
+//     }
+// }
+
+repositories {
+        ivy {
+                url "${System.properties['user.home']}/.duell/ivy"
+            }
+    }
+
+haxe {
+    // Set compiler options here for all platforms
+    //include "haxe"
+    main "Main.hx"
+
+    targetPlatforms {
+        js {
+            // Set compiler options here for only the JavaScript target
+           // include "haxe.javascript"
+            flag "-D js-enabled"
+        }
+        cpp {
+            // Set compiler options here for only the Cpp target
+            flag "-D only-for-cpp"
+        }
+    }
+}
+
+dependencies {
+    main group: "de.gameduell.types", name: "sample-lib", version: "1.0.0"
+}
+
+publishing {
+     repositories {
+            ivy {
+                // change to point to your repo, e.g. http://my.org/repo
+                url "${System.properties['user.home']}/.duell/ivy"
+            }
+        }
+  publications {
+    ivy(IvyPublication)
+    {
+      artifact("$buildDir/haxe-source/cpp/gradleHaxe-3.9.2.har") {
+        classifier "src"
+        extension "zip"
+      }
+    }
+  }
+}
+
+
+
+// task writePomCpp << {
+//     pom {
+//         project {
+//             groupId 'de.gameduell.haxe'
+//             artifactId 'types-cpp'
+//             version '3.9.2'
+//         }
+//     }.writeTo("$buildDir/haxe-source/cpp/pom.xml")
+// }
+
+//task compileCpp(type: com.prezi.haxe.gradle.HaxeCompile) {
+   // main "Main.hx"
+    // source <directory>
+    // targetPlatform "<js|swf|as3>"
+
+    // // Optional parameters
+    // configuration <configuration>
+    // debug <true|false>
+    // embed <file> ["<name>"]
+    // embedAll <directory>
+    // exclude "<package|class>"
+    // flag "<flag>"
+    // include "<package|class>"
+    // macro "<macro>"
+    // outputDirectory <directory>
+    // outputFile <file>
+    // resource <directory>
+//}
