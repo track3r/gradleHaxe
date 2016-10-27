@@ -49,6 +49,7 @@ haxe {
 
 dependencies {
     main group: "de.gameduell.types", name: "sample-lib", version: "1.0.0"
+    main files('actuate.zip')
 }
 
 publishing {
