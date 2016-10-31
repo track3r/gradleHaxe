@@ -1,24 +1,14 @@
 buildscript {
     repositories {
-        jcenter()
-        if (hasProperty("develop"))
-        {
         ivy {
                 // change to point to your repo, e.g. http://my.org/repo
                 url "${System.properties['user.home']}/.duell/ivy"
             }
-        }
-
+        jcenter()
     }
+
     dependencies {
-        if (hasProperty("develop"))
-        {
-            classpath group: 'com.prezi.haxe', name: 'gradle-haxe-plugin', version: '5.1-SNAPSHOT'
-        }
-        else
-        {
-            classpath group: 'com.prezi.haxe', name: 'gradle-haxe-plugin', version: '5.1'
-        }
+        classpath group: 'com.prezi.haxe', name: 'gradle-haxe-plugin', version: '5.1-SNAPSHOT'
 
         //classpath files('../gradle-haxe-plugin/build/libs/gradle-haxe-plugin-5.1-SNAPSHOT.jav');
     }
