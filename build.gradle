@@ -30,6 +30,9 @@ repositories {
         ivy {
                 url "${System.properties['user.home']}/.duell/ivy"
             }
+        ivy {
+                url "${System.properties['user.home']}/.duell/haxelib-ivy"
+            }
     }
 
 haxe {
@@ -52,7 +55,9 @@ haxe {
 
 dependencies {
     main group: "de.gameduell.types", name: "sample-lib", version: "1.0.0"
-    main group: "org.haxe.haxelib", name: "actuate", version: "1.8.7"
+    main group: "org.haxe.lib", name: "actuate", version: "1.8.7"
+    main group: "org.haxe.lib", name: "mconsole", version: "1.6.0"
+
     //main files('actuate.zip')
 }
 
@@ -75,15 +80,15 @@ publishing {
 }
 
 configurations.all {
-    resolutionStrategy.dependencySubstitution.all { DependencySubstitution dependency ->
-        println dependency.requested
+    //resolutionStrategy.dependencySubstitution.all { DependencySubstitution dependency ->
+        //println dependency.requested
         /*if (dependency.requested instanceof ModuleComponentSelector && dependency.requested.group == "org.example") {
             def targetProject = findProject(":${dependency.requested.module}")
             if (targetProject != null) {
                 dependency.useTarget targetProject
             }
         }*/
-    }
+    //}
 }
 
 
