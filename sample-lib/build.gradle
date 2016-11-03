@@ -43,6 +43,7 @@ haxe {
 }
 
 dependencies {
+    main group: "org.haxe.lib", name: "polygonal-ds", version: "2.0.0-beta"
 }
 
 publishing {
