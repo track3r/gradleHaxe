@@ -9,16 +9,29 @@ buildscript {
 
     dependencies {
         classpath group: 'com.prezi.haxe', name: 'gradle-haxe-plugin', version: '5.1-SNAPSHOT'
-
+        classpath 'cz.malohlava:visteg:1.0.0'
         //classpath files('../gradle-haxe-plugin/build/libs/gradle-haxe-plugin-5.1-SNAPSHOT.jav');
     }
 }
 
 apply plugin: com.prezi.haxe.gradle.HaxePlugin
+apply plugin: 'cz.malohlava.visteg'
 apply plugin: "ivy-publish"
 
 version = '3.9.2'
 group = 'de.gameduell.types'
+
+visteg {
+    enabled        = true
+    colouredNodes  = true
+    colouredEdges  = true
+    destination    = 'build/reports/visteg.dot'
+    exporter       = 'dot'
+    colorscheme    = 'spectral11'
+    nodeShape      = 'box'
+    startNodeShape = 'hexagon'
+    endNodeShape   = 'doubleoctagon'
+}
 
 // model {
 //     tasks.generateDescriptorFileForIvyCustomPublication {
@@ -40,23 +53,37 @@ haxe {
     //include "haxe"
     main "Main.hx"
 
-    targetPlatforms {
-        js {
-            // Set compiler options here for only the JavaScript target
-           // include "haxe.javascript"
-            flag "-D js-enabled"
-        }
-        cpp {
-            // Set compiler options here for only the Cpp target
-            flag "-D only-for-cpp"
+    js
+    {
+        flag "-D js-enabled"
+    }
+
+    cpp
+    {
+        flag "-D only-for-cpp"
+        android
+        {
+            androidTest = "test"
         }
     }
+}
+
+task artifacts {
+ group = "Help"
+ description = "Displays the artifacts associated with each configuration of " + project
+ doFirst {
+  configurations.findAll().each { config ->
+   println "${config}:"
+   config.allArtifacts.getFiles().each { file -> println "" + file}
+   println ' '
+  }
+ }
 }
 
 dependencies {
     main group: "de.gameduell.types", name: "sample-lib", version: "1.0.0"
     main group: "org.haxe.lib", name: "actuate", version: "1.8.7"
-    main group: "org.haxe.lib", name: "mconsole", version: "1.6.0"
+    cpp group: "org.haxe.lib", name: "mconsole", version: "1.6.0"
 
     //main files('actuate.zip')
 }
