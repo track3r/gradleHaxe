@@ -13,5 +13,6 @@ class Main
         var list: Dll<String> = new Dll<String>();
         list.append("list test");
         trace(list.removeTail());
+		trace(s.callMeSomething("CalledFromMain"));
 	}
 }
