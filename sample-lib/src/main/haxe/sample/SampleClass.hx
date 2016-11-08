@@ -1,6 +1,6 @@
 package sample;
 
-import de.polygonal.ds.DLL;
+import de.polygonal.ds.Dll;
 
 class SampleClass
 {
@@ -16,7 +16,7 @@ class SampleClass
 
     public function callMeSomething(younameit: String): String
     {
-    	var list: DLL<String> = new DLL<String>();
+    	var list: Dll<String> = new Dll<String>();
 
     	list.append("SampleClass returned: ");
 
